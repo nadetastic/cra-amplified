@@ -11,7 +11,7 @@ function App() {
 const pubToTopic = async () => {
     // console.log('...',PubSub.configure())
     try {
-        const res = await PubSub.publish('amplify4', { msg: 'Hello world! from Vite' }, { provider: 'AWSIoTProvider' });
+        const res = await PubSub.publish('amplify4', { msg: 'Hello world! from CRA' }, { provider: 'AWSIoTProvider' });
         console.log('Message published',res);
     } catch (error) {
         console.log('Error publishing message', error);
