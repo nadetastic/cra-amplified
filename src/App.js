@@ -1,28 +1,22 @@
 import logo from './logo.svg';
 import './App.css';
-import { PubSub, Hub } from 'aws-amplify';
+import { Auth, Hub } from 'aws-amplify';
 
 function App() {
-  Hub.listen('pubsub', (data) => {
+  Hub.listen('auth', (data) => {
     const { payload } = data;
     console.log(payload)
   });
 
-const pubToTopic = async () => {
-    // console.log('...',PubSub.configure())
+  const currentUser = async () => {
     try {
-        const res = await PubSub.publish('amplify4', { msg: 'Hello world! from CRA' }, { provider: 'AWSIoTProvider' });
-        console.log('Message published',res);
-    } catch (error) {
-        console.log('Error publishing message', error);
-    }
-};
+      const data = await Auth.currentAuthenticatedUser();
+      console.log(data);
+    } catch(err) {
+      console.log(err);
+    } 
+  };
 
-PubSub.subscribe('amplify3').subscribe({
-    next: data => console.log('Message received', data),
-    error: error => console.error(error),
-    complete: () => console.log('Done'),
-});
 
 
   return (
@@ -40,7 +34,7 @@ PubSub.subscribe('amplify3').subscribe({
         >
           Learn React
         </a><br />
-        <button onClick={pubToTopic}>Publish to Topic</button>
+        <button onClick={currentUser}>Get Current User</button>
       </header>
     </div>
   );
