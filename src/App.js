@@ -1,17 +1,14 @@
 import logo from './logo.svg';
 import './App.css';
+import { Amplify } from 'aws-amplify'
+import '@aws-amplify/ui-react/styles.css'
+import { withAuthenticator, signOut  } from '@aws-amplify/ui-react';
 
-
-function App() {
-  Hub.listen('', (data) => {
-    const { payload } = data;
-    console.log(payload)
-  });
-
+function App({ signOut }) {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+      <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
@@ -22,11 +19,13 @@ function App() {
           rel="noopener noreferrer"
         >
           Learn React
-        </a><br />
-        <button onClick={}></button>
+        </a>
+
+
       </header>
+      <signOut />
     </div>
   );
 }
 
-export default App;
+export default withAuthenticator(App);
